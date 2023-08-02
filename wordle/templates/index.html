@@ -28,11 +28,11 @@
       
       <div class="flex flex-col gap-8">
         {% with i = 1 %}
-        {% include 'partials/active_guess.html' %}
+        {% include 'guess/active.html' %}
         {% endwith %}
         
         {% for i in range(2, 7) %}
-        {% include 'partials/inactive_guess.html' %}
+        {% include 'guess/inactive.html' %}
         {% endfor %}
       </div>
     </div>
