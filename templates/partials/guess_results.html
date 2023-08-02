@@ -1,0 +1,12 @@
+
+<div class="flex justify-around" hx-trigger="load" hx-target="#guess-{{ i + 1 }}" hx-get="/partials/activeguess?i={{ i + 1 }}" hx-swap="outerHTML">
+  {% for letter in guess %}
+  <div class="w-32 h-32 text-center text-white {{ 'bg-green-700' if letter == word[loop.index - 1] else 'bg-yellow-700' if letter in word else 'bg-slate-700' }}">
+    <div class="h-full text-3xl flex flex-col justify-center mx-auto">{{ letter }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if guess == word %}
+<div class="hidden" hx-get="/victory?i={{ i }}" hx-trigger="load delay:1s" hx-target="#victory-modal" hx-swap="outerHTML"></div>
+{% endif %}

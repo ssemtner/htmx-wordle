@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wordle clone</title>
+
+  <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  {# TODO: use prod tailwind setup #}
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body x-data="{ word: '', invalid: false }"
+  @keypress="
+    if ($event.key.length === 1 && ($event.key.match(/^[a-z]+$/) || $event.key.match(/^[A-Z]+$/)) && word.length < 5) {
+      word += $event.key.toLowerCase()
+      if (invalid) {
+        invalid = false
+      }
+    }
+  " @keyup.enter="$dispatch('submitguess')" @keydown.backspace="word = word.slice(0, word.length - 1); invalid = false"
+>
+  <main class="bg-slate-200 h-screen w-screen p-16">
+    <div>
+      <h1 class="text-3xl text-center font-bold">Wordle</h1>
+      
+      <div class="flex flex-col gap-8">
+        {% with i = 1 %}
+        {% include 'partials/active_guess.html' %}
+        {% endwith %}
+        
+        {% for i in range(2, 7) %}
+        {% include 'partials/inactive_guess.html' %}
+        {% endfor %}
+      </div>
+    </div>
+    <div id="victory-modal"></div>
+  </main>
+</body>
+</html>

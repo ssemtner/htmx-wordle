@@ -1,0 +1,19 @@
+<div class="flex justify-around" id="guess-{{ i }}"
+  {% if invalid %}
+  x-init="invalid = true"
+  {% else %}
+  x-init="word = ''"
+  {% endif %}
+>
+  <form class="hidden" hx-get="/guess?i={{ i }}" hx-trigger="submitguess from:window" hx-target="#guess-{{ i }}" hx-swap="outerHTML">
+    <input x-bind:value="word" name="guess" hidden />
+    <input name="i" value="{{ i }}" hidden disabled />
+  </form>
+  {% for i in range(5) %}
+  <div class="w-32 h-32 text-center text-white bg-slate-700" :class="{ 'bg-slate-700': !invalid, 'bg-red-700': invalid }">
+    <div class="h-full text-3xl flex flex-col justify-center mx-auto">
+      <span x-text="word[{{ i }}]"></span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
